@@ -1,0 +1,279 @@
+// ─── Color tokens ────────────────────────────────────────────────────────────
+$sidebar-bg:      #0d2137;
+$sidebar-hover:   #1a3552;
+$sidebar-active:  #1e4a72;
+$sidebar-width:   220px;
+$header-bg:       #0d2137;
+$header-height:   56px;
+$accent-blue:     #1565c0;
+$white:           #ffffff;
+$text-muted:      rgba(255,255,255,0.55);
+
+// ─── App Shell ────────────────────────────────────────────────────────────────
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+// ─── Header ──────────────────────────────────────────────────────────────────
+.app-header {
+  background-color: $header-bg !important;
+  color: $white !important;
+  height: $header-height;
+  min-height: $header-height;
+  position: relative;
+  z-index: 100;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .menu-btn {
+    color: $white;
+    margin-right: 4px;
+  }
+
+  .header-logo-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    color: #64b5f6;
+  }
+
+  .header-brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: $white;
+  }
+
+  .header-subtitle {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: $text-muted;
+    margin-top: 2px;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .env-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 3px 10px;
+    border-radius: 4px;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.3px;
+  }
+
+  .user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: background 0.2s;
+
+    mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+      color: $white;
+    }
+
+    &:hover {
+      background: rgba(255,255,255,0.25);
+    }
+  }
+}
+
+// ─── Sidenav Container ───────────────────────────────────────────────────────
+.app-sidenav-container {
+  flex: 1;
+  // Override Material's white background
+  --mat-sidenav-container-background-color: #f0f2f5;
+}
+
+// ─── Sidebar ─────────────────────────────────────────────────────────────────
+// Force square corners on Material's mat-sidenav surface
+.mat-drawer.app-sidenav,
+.mat-sidenav.app-sidenav {
+  border-radius: 0 !important;
+}
+
+.app-sidenav {
+  width: $sidebar-width;
+  background-color: $sidebar-bg !important;
+  border-right: none !important;
+  border-radius: 0 !important;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  // Override MDC drawer surface so it has no radius
+  --mat-sidenav-container-shape: 0px;
+
+  .sidebar-section-label {
+    padding: 20px 18px 8px 18px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #ffffff;          // ← white, not muted
+    text-transform: uppercase;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 0;
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 0;
+      cursor: pointer;
+      color: #ffffff !important;
+      text-decoration: none;
+      user-select: none;
+
+      // Force Material MDC list item text to direct white with no hover/pressed layer
+      --mdc-list-list-item-label-text-color: #ffffff;
+      --mdc-list-list-item-hover-label-text-color: #ffffff;
+      --mdc-list-list-item-focus-label-text-color: #ffffff;
+      --mdc-list-list-item-hover-state-layer-color: transparent;
+      --mdc-list-list-item-focus-state-layer-color: transparent;
+      --mdc-list-list-item-pressed-state-layer-color: transparent;
+
+      // No hover background shift - directly clean
+      &:hover {
+        background-color: transparent !important;
+        color: #ffffff !important;
+
+        .nav-icon {
+          color: #ffffff;
+        }
+
+        .nav-label {
+          color: #ffffff;
+        }
+      }
+
+      // No click/active flash
+      &:active, &:focus {
+        background-color: transparent !important;
+      }
+
+      &.nav-item--active {
+        background-color: $sidebar-active !important;
+        color: #ffffff !important;
+        border-left: 3px solid #64b5f6;
+
+        .nav-icon {
+          color: #ffffff;
+        }
+
+        .nav-label {
+          font-weight: 400;
+          color: #ffffff;
+        }
+      }
+
+      .nav-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: #ffffff;
+        margin-right: 12px;
+        flex-shrink: 0;
+      }
+
+      .nav-label {
+        font-size: 0.85rem;
+        font-weight: 400;
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .sidebar-footer {
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    .sidebar-footer-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+      color: $text-muted;
+    }
+
+    .sidebar-footer-text {
+      font-size: 0.7rem;
+      color: $text-muted;
+    }
+  }
+}
+
+// ─── Main Content Area ───────────────────────────────────────────────────────
+.app-main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f0f2f5;
+
+  .content-body {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
+// ─── Footer ──────────────────────────────────────────────────────────────────
+.app-footer {
+  padding: 12px 24px;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #888;
+}
+
+// ─── Responsive ──────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .app-sidenav {
+    width: 200px;
+  }
+
+  .header-subtitle {
+    display: none;
+  }
+
+  .env-tag {
+    display: none;
+  }
+}

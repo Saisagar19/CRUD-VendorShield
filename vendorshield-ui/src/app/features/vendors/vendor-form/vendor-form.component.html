@@ -1,0 +1,118 @@
+<div class="form-page">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Add Vendor</h1>
+      <nav class="breadcrumb">
+        <a class="breadcrumb-link" routerLink="/">Home</a>
+        <mat-icon class="breadcrumb-sep">chevron_right</mat-icon>
+        <a class="breadcrumb-link" routerLink="/vendors">Vendors</a>
+        <mat-icon class="breadcrumb-sep">chevron_right</mat-icon>
+        <span class="breadcrumb-current">Register New</span>
+      </nav>
+    </div>
+  </div>
+
+  <mat-divider class="page-divider"></mat-divider>
+
+  <!-- Form Card -->
+  <div class="form-wrapper">
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-icon-wrap">
+          <mat-icon class="form-icon">person_add</mat-icon>
+        </div>
+        <div>
+          <h2 class="form-card-title">Vendor Registration</h2>
+          <p class="form-card-subtitle">Fill in the vendor details for compliance registration</p>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()" class="form-body">
+        <div class="form-section">
+          <h3 class="section-label">Basic Information</h3>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Vendor Name</mat-label>
+            <mat-icon matPrefix class="field-prefix-icon">business</mat-icon>
+            <input matInput formControlName="name" placeholder="e.g. Acme Corporation" />
+            <mat-error *ngIf="vendorForm.get('name')?.hasError('required')">Vendor name is required</mat-error>
+            <mat-error *ngIf="vendorForm.get('name')?.hasError('maxlength')">Maximum 150 characters allowed</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Tax Identifier (Unique)</mat-label>
+            <mat-icon matPrefix class="field-prefix-icon">tag</mat-icon>
+            <input matInput formControlName="taxIdentifier" placeholder="e.g. TAX-US-9901" />
+            <mat-error *ngIf="vendorForm.get('taxIdentifier')?.hasError('required')">Tax ID is required</mat-error>
+            <mat-error *ngIf="vendorForm.get('taxIdentifier')?.hasError('maxlength')">Maximum 50 characters allowed</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contact Email</mat-label>
+            <mat-icon matPrefix class="field-prefix-icon">email</mat-icon>
+            <input matInput type="email" formControlName="contactEmail" placeholder="compliance@vendor.com" />
+            <mat-error *ngIf="vendorForm.get('contactEmail')?.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="vendorForm.get('contactEmail')?.hasError('email')">Enter a valid email address</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-label">Classification</h3>
+
+          <div class="grid-two">
+            <mat-form-field appearance="outline">
+              <mat-label>Vendor Tier</mat-label>
+              <mat-select formControlName="tier">
+                <mat-option value="TIER_1">Tier 1 — High Criticality</mat-option>
+                <mat-option value="TIER_2">Tier 2 — Medium Risk</mat-option>
+                <mat-option value="TIER_3">Tier 3 — Standard</mat-option>
+              </mat-select>
+              <mat-error *ngIf="vendorForm.get('tier')?.hasError('required')">Tier is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Initial Status</mat-label>
+              <mat-select formControlName="status">
+                <mat-option value="UNDER_REVIEW">Under Review</mat-option>
+                <mat-option value="ACTIVE">Active</mat-option>
+                <mat-option value="SUSPENDED">Suspended</mat-option>
+              </mat-select>
+              <mat-error *ngIf="vendorForm.get('status')?.hasError('required')">Status is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" class="btn-cancel" (click)="onCancel()" [disabled]="isSubmitting">
+            <mat-icon>arrow_back</mat-icon>
+            Cancel
+          </button>
+          <button mat-flat-button class="btn-save" type="submit" [disabled]="vendorForm.invalid || isSubmitting">
+            <mat-icon>{{ isSubmitting ? 'hourglass_empty' : 'save' }}</mat-icon>
+            {{ isSubmitting ? 'Saving...' : 'Save Vendor' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-panel">
+      <div class="info-panel-header">
+        <mat-icon class="info-icon">info_outline</mat-icon>
+        <span>Registration Notes</span>
+      </div>
+      <ul class="info-list">
+        <li>Tax Identifier must be globally unique per vendor.</li>
+        <li>Tier 1 vendors require mandatory compliance review.</li>
+        <li>New vendors default to <strong>Under Review</strong> status.</li>
+        <li>Contact email is used for compliance notifications.</li>
+      </ul>
+    </div>
+  </div>
+</div>

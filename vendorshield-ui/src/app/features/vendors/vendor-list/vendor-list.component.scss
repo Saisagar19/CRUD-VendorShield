@@ -1,0 +1,451 @@
+// ─── Color Tokens ─────────────────────────────────────────────────────────────
+$primary:          #1565c0;
+$primary-light:    #e8f0fe;
+$header-border:    #e4e8ef;
+$row-hover:        #f5f8ff;
+$text-primary:     #1a2332;
+$text-secondary:   #6b7a94;
+$badge-radius:     4px;
+
+// ─── Page Container ──────────────────────────────────────────────────────────
+.vendor-container {
+  padding: 24px 28px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+}
+
+// ─── Page Header ─────────────────────────────────────────────────────────────
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.page-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.2px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.78rem;
+
+  .breadcrumb-link {
+    color: $primary;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .breadcrumb-sep {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    color: $text-secondary;
+  }
+
+  .breadcrumb-current {
+    color: $text-secondary;
+  }
+}
+
+.btn-primary-action {
+  background-color: $primary !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  padding: 0 20px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(21,101,192,0.25);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: #1155a8 !important;
+    box-shadow: 0 2px 6px rgba(21,101,192,0.35);
+  }
+}
+
+.page-divider {
+  margin-bottom: 20px;
+}
+
+// ─── Filter Panel ────────────────────────────────────────────────────────────
+.filter-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+
+  .search-field {
+    flex: 2;
+    min-width: 220px;
+  }
+
+  .status-field {
+    flex: 1;
+    min-width: 160px;
+  }
+}
+
+// ─── Table Wrapper ────────────────────────────────────────────────────────────
+.table-wrapper {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid $header-border;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.table-scroll-container {
+  overflow-x: auto;
+}
+
+// ─── Table Styles ────────────────────────────────────────────────────────────
+.vendor-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  // Header row
+  th.mat-header-cell {
+    background-color: #f7f9fc;
+    color: $text-secondary;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 10px 14px;
+    border-bottom: 1px solid $header-border;
+    white-space: nowrap;
+  }
+
+  // Data cells
+  td.mat-cell {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: $text-primary;
+    border-bottom: 1px solid #f0f2f5;
+    vertical-align: middle;
+  }
+
+  // Row hover
+  .vendor-row:hover td.mat-cell {
+    background-color: $row-hover;
+    cursor: default;
+  }
+
+  // ID column
+  .col-id {
+    width: 44px;
+    color: $text-secondary;
+    font-size: 0.8rem;
+  }
+
+  // Actions column
+  .col-actions {
+    width: 90px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .text-muted {
+    color: $text-secondary;
+  }
+}
+
+// ─── Vendor Name Cell ─────────────────────────────────────────────────────────
+.vendor-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vendor-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #1565c0 0%, #1e88e5 100%);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vendor-name {
+  font-weight: 600;
+  color: $text-primary;
+}
+
+// ─── Tax Code ─────────────────────────────────────────────────────────────────
+.tax-code {
+  font-family: 'Roboto Mono', 'Courier New', monospace;
+  font-size: 0.78rem;
+  background: #f0f2f5;
+  color: #374151;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid #e4e8ef;
+}
+
+// ─── Status Badge ─────────────────────────────────────────────────────────────
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px 3px 8px;
+  border-radius: $badge-radius;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &.active {
+    background-color: #e6f4ea;
+    color: #1b6b37;
+    .status-dot { background: #34a853; }
+  }
+
+  &.under_review {
+    background-color: #fff8e1;
+    color: #8d6200;
+    .status-dot { background: #f9ab00; }
+  }
+
+  &.suspended {
+    background-color: #fce8e6;
+    color: #c0392b;
+    .status-dot { background: #ea4335; }
+  }
+}
+
+// ─── Tier Badge ───────────────────────────────────────────────────────────────
+.tier-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: $badge-radius;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #e8f0fe;
+  color: $primary;
+  border: 1px solid #c5d8f8;
+}
+
+// ─── Action Buttons ───────────────────────────────────────────────────────────
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+
+  mat-icon {
+    font-size: 17px;
+    width: 17px;
+    height: 17px;
+  }
+
+  &--edit {
+    color: #1565c0;
+
+    &:hover {
+      background: #e8f0fe;
+    }
+  }
+
+  &--delete {
+    color: #c0392b;
+
+    &:hover {
+      background: #fce8e6;
+    }
+  }
+}
+
+// ─── Empty State ──────────────────────────────────────────────────────────────
+.empty-state-cell {
+  padding: 0 !important;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px;
+  gap: 12px;
+
+  .empty-state-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #c5cfd8;
+  }
+
+  .empty-state-text {
+    margin: 0;
+    font-size: 0.9rem;
+    color: $text-secondary;
+  }
+}
+
+// ─── Paginator ───────────────────────────────────────────────────────────────
+.table-paginator {
+  background: #ffffff;
+  border-top: 1px solid $header-border;
+  font-size: 0.82rem;
+}
+
+// ─── Actions Header (with + button) ──────────────────────────────────────────
+.actions-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.add-row-btn {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  max-width: 26px;
+  padding: 0 !important;
+  border-radius: 50%;
+  background-color: #1565c0 !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box;
+  vertical-align: middle;
+  transition: background 0.15s, transform 0.1s;
+
+  // Reset MDC icon button sizing and touch targets
+  --mdc-icon-button-state-layer-size: 26px;
+  --mat-icon-button-state-layer-size: 26px;
+
+  .mat-mdc-button-touch-target {
+    display: none;
+  }
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  &:hover {
+    background-color: #1155a8 !important;
+    transform: scale(1.08);
+  }
+}
+
+// ─── Save / Cancel in inline row ─────────────────────────────────────────────
+.action-btn--save {
+  color: #1b6b37;
+
+  &:hover:not([disabled]) {
+    background: #e6f4ea;
+  }
+
+  &[disabled] {
+    opacity: 0.45;
+  }
+}
+
+.action-btn--cancel {
+  color: #6b7a94;
+
+  &:hover {
+    background: #f0f2f5;
+  }
+}
+
+// ─── Inline Form Row ──────────────────────────────────────────────────────────
+.inline-form-row {
+  background-color: #f0f5ff;
+  border-top: 2px solid #1565c0;
+
+  td.mat-footer-cell {
+    padding: 6px 8px;
+    border-bottom: none;
+    vertical-align: middle;
+  }
+}
+
+.inline-form-row--hidden {
+  display: none !important;
+}
+
+.inline-cell {
+  vertical-align: middle;
+}
+
+.new-row-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #1565c0;
+}
+
+// Compact outline fields inside the inline row
+.inline-field {
+  width: 100%;
+  min-width: 60px;
+
+  .mat-mdc-text-field-wrapper {
+    padding: 0 6px;
+  }
+
+  input.mat-mdc-input-element {
+    font-size: 0.82rem;
+  }
+
+  .mat-mdc-select-value-text {
+    font-size: 0.82rem;
+  }
+}

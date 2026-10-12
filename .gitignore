@@ -1,0 +1,55 @@
+# ==========================================
+# Root .gitignore for VendorShield (CRUD)
+# Covers: Angular (Frontend), Spring Boot (Backend), IDEs & OS
+# ==========================================
+
+# --- Node / Angular (Frontend) ---
+**/node_modules/
+**/dist/
+**/.angular/
+**/.sass-cache/
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# --- Java / Maven / Spring Boot (Backend) ---
+**/target/
+**/.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# --- Eclipse / STS Metadata ---
+**/.metadata/
+**/.classpath
+**/.project
+**/.settings/
+**/.factorypath
+**/.springBeans
+**/.sts4-cache
+**/.apt_generated/
+
+# --- IntelliJ IDEA ---
+**/.idea/
+*.iml
+*.iws
+*.ipr
+
+# --- VS Code ---
+**/.vscode/
+!**/.vscode/extensions.json
+
+# --- Environment & Secret files ---
+**/.env
+**/.env.*
+!**/.env.example
+*.key
+*.pem
+
+# --- OS Generated Files ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+
+# --- General Logs ---
+*.log

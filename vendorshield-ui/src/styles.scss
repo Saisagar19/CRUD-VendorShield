@@ -1,0 +1,96 @@
+@use '@angular/material' as mat;
+
+// ─── Angular Material Theme ──────────────────────────────────────────────────
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$blue-palette,
+      tertiary: mat.$cyan-palette,
+    ),
+    typography: Roboto,
+    density: -1,
+  ));
+}
+
+// ─── Base Reset ──────────────────────────────────────────────────────────────
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color-scheme: light;
+}
+
+body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  background-color: #f0f2f5;
+  color: #1a2332;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ─── Material Form Field Overrides ───────────────────────────────────────────
+// Make outline form fields slightly more compact
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: #d1d9e6;
+  --mdc-outlined-text-field-hover-outline-color: #1565c0;
+  --mdc-outlined-text-field-focus-outline-color: #1565c0;
+  --mdc-outlined-text-field-label-text-size: 0.85rem;
+  --mdc-outlined-text-field-input-text-size: 0.85rem;
+}
+
+// ─── Material Table Overrides ─────────────────────────────────────────────────
+.mat-mdc-table {
+  --mdc-elevated-card-container-color: transparent;
+}
+
+// ─── Material Paginator ───────────────────────────────────────────────────────
+.mat-mdc-paginator {
+  --mat-paginator-container-text-size: 0.82rem;
+}
+
+// ─── Material Dialog Overrides ────────────────────────────────────────────────
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 10px;
+}
+
+.mat-mdc-dialog-surface {
+  overflow: hidden !important;
+}
+
+// ─── Material Snackbar ────────────────────────────────────────────────────────
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-shape: 6px;
+  --mat-snack-bar-button-color: #64b5f6;
+}
+
+// ─── Scrollbar Styling ────────────────────────────────────────────────────────
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f2f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5cfd8;
+  border-radius: 3px;
+
+  &:hover {
+    background: #a0adb8;
+  }
+}
+
+// ─── Sidenav Square Corners (global override) ─────────────────────────────────
+.mat-drawer-inner-container,
+.mat-sidenav .mat-drawer-inner-container,
+.mdc-drawer__content {
+  border-radius: 0 !important;
+}
+
+// Strip any radius from the drawer host element itself
+.mat-sidenav,
+.mat-drawer {
+  border-radius: 0 !important;
+}

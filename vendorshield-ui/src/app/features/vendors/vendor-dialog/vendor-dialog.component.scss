@@ -1,0 +1,147 @@
+// ─── Dialog Header ────────────────────────────────────────────────────────────
+.dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px 16px 24px;
+  gap: 12px;
+
+  .dialog-header-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .dialog-icon-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: #e8f0fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .dialog-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    color: #1565c0;
+  }
+
+  .dialog-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a2332;
+    margin: 0 0 3px 0;
+    padding: 0;
+  }
+
+  .dialog-subtitle {
+    font-size: 0.78rem;
+    color: #6b7a94;
+    margin: 0;
+  }
+
+  .dialog-close-btn {
+    color: #6b7a94;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+
+    &:hover {
+      color: #1a2332;
+      background: #f0f2f5;
+    }
+  }
+}
+
+// ─── Form Container ──────────────────────────────────────────────────────────
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 460px;
+  padding: 20px 24px 12px 24px !important;
+  max-height: 60vh;
+  overflow-y: auto;
+
+  @media (max-width: 600px) {
+    min-width: unset;
+    width: 100%;
+    padding: 16px !important;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
+.half-width {
+  flex: 1;
+}
+
+.field-prefix-icon {
+  color: #6b7a94;
+  font-size: 18px;
+  margin-right: 4px;
+}
+
+// ─── Dialog Actions ──────────────────────────────────────────────────────────
+.dialog-actions {
+  padding: 16px 24px !important;
+  gap: 10px;
+  justify-content: flex-end !important;
+  display: flex;
+
+  .btn-cancel {
+    border-radius: 6px;
+    color: #6b7a94;
+    border-color: #d1d9e6;
+    font-size: 0.84rem;
+    padding: 0 18px;
+    height: 36px;
+
+    &:hover {
+      background: #f5f7fa;
+      border-color: #b0b8cc;
+    }
+  }
+
+  .btn-submit {
+    border-radius: 6px;
+    background-color: #1565c0 !important;
+    color: #ffffff !important;
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 0 20px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    mat-icon {
+      font-size: 17px;
+      width: 17px;
+      height: 17px;
+    }
+
+    &:hover:not([disabled]) {
+      background-color: #1155a8 !important;
+    }
+
+    &[disabled] {
+      opacity: 0.5;
+    }
+  }
+}

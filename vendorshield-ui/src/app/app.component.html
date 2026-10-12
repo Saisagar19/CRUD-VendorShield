@@ -1,0 +1,59 @@
+<div class="app-container">
+  <!-- 1. HEADER -->
+  <mat-toolbar class="app-header">
+    <div class="header-left">
+      <button mat-icon-button (click)="sidenav.toggle()" aria-label="Toggle sidebar" class="menu-btn" matTooltip="Toggle Sidebar">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-icon class="header-logo-icon">shield</mat-icon>
+      <span class="header-brand">VendorShield</span>
+      <span class="header-subtitle">Portal</span>
+    </div>
+    <span class="spacer"></span>
+    <div class="header-right">
+      <div class="user-avatar" title="Admin User">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <!-- 2. SIDEBAR & MAIN BODY -->
+  <mat-sidenav-container class="app-sidenav-container">
+    <mat-sidenav #sidenav mode="side" opened class="app-sidenav">
+      <div class="sidebar-section-label">MAIN MENU</div>
+
+      <mat-nav-list class="sidebar-nav" [disableRipple]="true">
+
+        <!-- Vendors (active route) -->
+        <a mat-list-item class="nav-item" [disableRipple]="true" routerLink="/vendors" routerLinkActive="nav-item--active" [routerLinkActiveOptions]="{ exact: true }">
+          <mat-icon class="nav-icon">store</mat-icon>
+          <span class="nav-label">Vendors</span>
+        </a>
+
+        <!-- Add Vendor -->
+        <a mat-list-item class="nav-item" [disableRipple]="true" routerLink="/vendors/new" routerLinkActive="nav-item--active">
+          <mat-icon class="nav-icon">person_add</mat-icon>
+          <span class="nav-label">Add Vendor</span>
+        </a>
+
+      </mat-nav-list>
+
+      <div class="sidebar-footer">
+        <mat-icon class="sidebar-footer-icon">info_outline</mat-icon>
+        <span class="sidebar-footer-text">v1.0.0</span>
+      </div>
+    </mat-sidenav>
+
+    <!-- MAIN VIEW AREA -->
+    <mat-sidenav-content class="app-main-content">
+      <div class="content-body">
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- 3. FOOTER -->
+      <footer class="app-footer">
+        <span>© 2026 <strong>VendorShield</strong> — Enterprise Compliance &amp; Contract Registry. All rights reserved.</span>
+      </footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

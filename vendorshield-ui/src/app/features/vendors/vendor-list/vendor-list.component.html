@@ -1,0 +1,231 @@
+<div class="vendor-container">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1 class="page-title">Vendor Management</h1>
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a class="breadcrumb-link" routerLink="/">Home</a>
+        <mat-icon class="breadcrumb-sep">chevron_right</mat-icon>
+        <span class="breadcrumb-current">Vendors</span>
+      </nav>
+    </div>
+    <div class="page-header-right">
+      <button mat-flat-button class="btn-primary-action" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        Register Vendor
+      </button>
+    </div>
+  </div>
+
+  <mat-divider class="page-divider"></mat-divider>
+
+  <!-- Filter Panel -->
+  <div class="filter-panel">
+    <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+      <mat-label>Search by Vendor Name</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (keyup.enter)="applyFilter()" placeholder="e.g. Acme" />
+      <button mat-icon-button matSuffix *ngIf="searchQuery" (click)="searchQuery=''; applyFilter()" aria-label="Clear search" matTooltip="Clear">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button mat-icon-button matSuffix (click)="applyFilter()" aria-label="Search" matTooltip="Search">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="status-field" subscriptSizing="dynamic">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="statusFilter" (selectionChange)="applyFilter()">
+        <mat-option [value]="undefined">All Statuses</mat-option>
+        <mat-option value="ACTIVE">Active</mat-option>
+        <mat-option value="UNDER_REVIEW">Under Review</mat-option>
+        <mat-option value="SUSPENDED">Suspended</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    <div class="table-scroll-container">
+      <form [formGroup]="inlineForm" (ngSubmit)="saveInlineVendor()">
+        <table mat-table [dataSource]="vendors" class="vendor-table">
+
+          <!-- ID / Sr. No Column (Commented out)
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef class="col-id">Sr. No</th>
+            <td mat-cell *matCellDef="let v; let i = index" class="col-id text-muted" [matTooltip]="'Record ID: ' + v.id" matTooltipPosition="above">
+              {{ (currentPage * pageSize) + i + 1 }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef class="col-id inline-cell">
+              <mat-icon class="new-row-icon">add_circle_outline</mat-icon>
+            </td>
+          </ng-container>
+          -->
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Vendor Name</th>
+            <td mat-cell *matCellDef="let v">
+              <span>{{ v.name }}</span>
+            </td>
+            <!-- Inline row: Name input -->
+            <td mat-footer-cell *matFooterCellDef class="inline-cell">
+              <mat-form-field appearance="outline" class="inline-field" subscriptSizing="dynamic">
+                <input matInput formControlName="name" placeholder="Vendor name *" />
+                <mat-error *ngIf="inlineForm.get('name')?.hasError('required')">Required</mat-error>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Tax ID Column -->
+          <ng-container matColumnDef="taxIdentifier">
+            <th mat-header-cell *matHeaderCellDef>Tax ID</th>
+            <td mat-cell *matCellDef="let v">
+              <span>{{ v.taxIdentifier }}</span>
+            </td>
+            <!-- Inline row: Tax ID input -->
+            <td mat-footer-cell *matFooterCellDef class="inline-cell">
+              <mat-form-field appearance="outline" class="inline-field" subscriptSizing="dynamic">
+                <input matInput formControlName="taxIdentifier" placeholder="e.g. TAX-US-001 *" />
+                <mat-error *ngIf="inlineForm.get('taxIdentifier')?.hasError('required')">Required</mat-error>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="contactEmail">
+            <th mat-header-cell *matHeaderCellDef>Contact Email</th>
+            <td mat-cell *matCellDef="let v">{{ v.contactEmail }}</td>
+            <!-- Inline row: Email input -->
+            <td mat-footer-cell *matFooterCellDef class="inline-cell">
+              <mat-form-field appearance="outline" class="inline-field" subscriptSizing="dynamic">
+                <input matInput formControlName="contactEmail" type="email" placeholder="email@vendor.com *" />
+                <mat-error *ngIf="inlineForm.get('contactEmail')?.hasError('required')">Required</mat-error>
+                <mat-error *ngIf="inlineForm.get('contactEmail')?.hasError('email')">Invalid email</mat-error>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Tier Column -->
+          <ng-container matColumnDef="tier">
+            <th mat-header-cell *matHeaderCellDef>Tier</th>
+            <td mat-cell *matCellDef="let v">
+              <span>{{ v.tier | titlecase }}</span>
+            </td>
+            <!-- Inline row: Tier select -->
+            <td mat-footer-cell *matFooterCellDef class="inline-cell">
+              <mat-form-field appearance="outline" class="inline-field" subscriptSizing="dynamic">
+                <mat-select formControlName="tier">
+                  <mat-option value="TIER_1">Tier 1</mat-option>
+                  <mat-option value="TIER_2">Tier 2</mat-option>
+                  <mat-option value="TIER_3">Tier 3</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let v">
+              <span class="status-text" [ngClass]="v.status ? v.status.toLowerCase() : ''">
+                {{ v.status | titlecase }}
+              </span>
+            </td>
+            <!-- Inline row: Status select -->
+            <td mat-footer-cell *matFooterCellDef class="inline-cell">
+              <mat-form-field appearance="outline" class="inline-field" subscriptSizing="dynamic">
+                <mat-select formControlName="status">
+                  <mat-option value="ACTIVE">Active</mat-option>
+                  <mat-option value="UNDER_REVIEW">Under Review</mat-option>
+                  <mat-option value="SUSPENDED">Suspended</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="col-actions">
+              <div class="actions-header">
+                <span>Actions</span>
+                <!-- + button to open inline form -->
+                <button
+                  mat-icon-button
+                  type="button"
+                  class="add-row-btn"
+                  (click)="openInlineForm()"
+                  *ngIf="!showInlineForm"
+                  matTooltip="Add vendor inline"
+                  matTooltipPosition="above">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let v" class="col-actions">
+              <button mat-icon-button class="action-btn action-btn--edit" (click)="openEditDialog(v)" matTooltip="Edit Vendor" matTooltipPosition="above">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="action-btn action-btn--delete" (click)="deleteVendor(v.id)" matTooltip="Delete Vendor" matTooltipPosition="above">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </td>
+            <!-- Inline row: Save + Cancel buttons -->
+            <td mat-footer-cell *matFooterCellDef class="col-actions inline-cell">
+              <button
+                mat-icon-button
+                type="submit"
+                class="action-btn action-btn--save"
+                [disabled]="isSavingInline"
+                matTooltip="Save vendor"
+                matTooltipPosition="above">
+                <mat-icon>check</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                type="button"
+                class="action-btn action-btn--cancel"
+                (click)="cancelInlineForm()"
+                matTooltip="Cancel"
+                matTooltipPosition="above">
+                <mat-icon>close</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Rows -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="vendor-row"></tr>
+
+          <!-- Inline Add Row (footer row, shown only when showInlineForm = true) -->
+          <tr mat-footer-row *matFooterRowDef="displayedColumns"
+              [class.inline-form-row--hidden]="!showInlineForm"
+              class="inline-form-row">
+          </tr>
+
+          <!-- No data row -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell empty-state-cell" [attr.colspan]="displayedColumns.length">
+              <div class="empty-state">
+                <mat-icon class="empty-state-icon">inventory_2</mat-icon>
+                <p class="empty-state-text">No vendors found matching your criteria.</p>
+                <button mat-stroked-button type="button" (click)="searchQuery=''; statusFilter=undefined; applyFilter()">Clear filters</button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-paginator
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+      class="table-paginator">
+    </mat-paginator>
+  </div>
+</div>
