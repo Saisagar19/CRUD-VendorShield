@@ -1,0 +1,93 @@
+<div class="login-page-container">
+  <div class="login-card-wrapper">
+    <!-- Header / Brand Section -->
+    <div class="login-header">
+      <div class="brand-badge">
+        <mat-icon class="brand-icon">shield</mat-icon>
+      </div>
+      <h1 class="brand-title">VendorShield</h1>
+      <p class="brand-subtitle">Enterprise Compliance &amp; Vendor Management</p>
+    </div>
+
+    <mat-card class="login-card">
+      <div class="card-heading">
+        <h2>Sign In</h2>
+        <span class="sub-text">Enter your credentials to access your account</span>
+      </div>
+
+      <!-- Error Alert Message -->
+      <div class="alert-box alert-danger" *ngIf="errorMessage">
+        <mat-icon class="alert-icon">error_outline</mat-icon>
+        <span class="alert-message">{{ errorMessage }}</span>
+      </div>
+
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
+        <!-- Username Field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <mat-icon matPrefix class="field-icon">person</mat-icon>
+          <input
+            matInput
+            formControlName="username"
+            placeholder="Enter username"
+            autocomplete="username"
+            autofocus
+          />
+          <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+            Username is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('username')?.hasError('minlength')">
+            Minimum 3 characters required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Password Field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <mat-icon matPrefix class="field-icon">lock</mat-icon>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Enter password"
+            autocomplete="current-password"
+          />
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'"
+            tabindex="-1"
+          >
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            Password is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+            Minimum 4 characters required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Submit Button -->
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          class="submit-button"
+          [disabled]="isLoading"
+        >
+          <mat-spinner diameter="20" *ngIf="isLoading" class="button-spinner"></mat-spinner>
+          <span *ngIf="!isLoading">Sign In</span>
+          <span *ngIf="isLoading">Authenticating...</span>
+        </button>
+      </form>
+    </mat-card>
+
+    <div class="login-footer">
+      <!-- <span>Protected by JWT Authentication &amp; Spring Security RBAC</span> -->
+    </div>
+  </div>
+</div>

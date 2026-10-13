@@ -11,7 +11,7 @@
       </nav>
     </div>
     <div class="page-header-right">
-      <button mat-flat-button class="btn-primary-action" (click)="openCreateDialog()">
+      <button *ngIf="canManage" mat-flat-button class="btn-primary-action" (click)="openCreateDialog()">
         <mat-icon>add</mat-icon>
         Register Vendor
       </button>
@@ -149,13 +149,13 @@
             <th mat-header-cell *matHeaderCellDef class="col-actions">
               <div class="actions-header">
                 <span>Actions</span>
-                <!-- + button to open inline form -->
+                <!-- + button to open inline form (Managers & Admins only) -->
                 <button
                   mat-icon-button
                   type="button"
                   class="add-row-btn"
                   (click)="openInlineForm()"
-                  *ngIf="!showInlineForm"
+                  *ngIf="!showInlineForm && canManage"
                   matTooltip="Add vendor inline"
                   matTooltipPosition="above">
                   <mat-icon>add</mat-icon>
@@ -163,12 +163,16 @@
               </div>
             </th>
             <td mat-cell *matCellDef="let v" class="col-actions">
-              <button mat-icon-button class="action-btn action-btn--edit" (click)="openEditDialog(v)" matTooltip="Edit Vendor" matTooltipPosition="above">
+              <button *ngIf="canManage" mat-icon-button class="action-btn action-btn--edit" (click)="openEditDialog(v)" matTooltip="Edit Vendor" matTooltipPosition="above">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button class="action-btn action-btn--delete" (click)="deleteVendor(v.id)" matTooltip="Delete Vendor" matTooltipPosition="above">
+              <button *ngIf="canDelete" mat-icon-button class="action-btn action-btn--delete" (click)="deleteVendor(v.id)" matTooltip="Delete Vendor" matTooltipPosition="above">
                 <mat-icon>delete_outline</mat-icon>
               </button>
+              <span *ngIf="!canManage && !canDelete" class="view-only-tag" matTooltip="Read-only access: Admin or Manager required for modifications">
+                <mat-icon class="view-only-icon">visibility</mat-icon>
+                <span>Read only</span>
+              </span>
             </td>
             <!-- Inline row: Save + Cancel buttons -->
             <td mat-footer-cell *matFooterCellDef class="col-actions inline-cell">

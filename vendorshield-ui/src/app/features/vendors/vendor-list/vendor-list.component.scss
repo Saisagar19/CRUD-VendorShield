@@ -449,3 +449,22 @@ $badge-radius:     4px;
     font-size: 0.82rem;
   }
 }
+
+.view-only-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 3px 8px;
+  border-radius: 4px;
+
+  .view-only-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    color: #94a3b8;
+  }
+}

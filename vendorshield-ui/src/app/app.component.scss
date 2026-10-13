@@ -73,38 +73,141 @@ $text-muted:      rgba(255,255,255,0.55);
     gap: 16px;
   }
 
-  .env-tag {
-    font-size: 0.75rem;
-    font-weight: 500;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 3px 10px;
+  .user-role-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
     border-radius: 4px;
-    color: rgba(255,255,255,0.85);
-    letter-spacing: 0.3px;
+    text-transform: uppercase;
+
+    &.role-badge--admin {
+      background: #7c3aed;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
+    }
+
+    &.role-badge--manager {
+      background: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+    }
+
+    &.role-badge--viewer {
+      background: #475569;
+      color: #f1f5f9;
+    }
+
+    &.role-badge--default {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
   }
 
-  .user-avatar {
+  .user-menu-btn {
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0 8px !important;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .user-avatar-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      color: #93c5fd;
+    }
+
+    .dropdown-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+}
+
+.sidebar-user-card {
+  margin: auto 12px 12px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 12px;
+
+  .card-role-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.8px;
+  }
+
+  .card-role-val {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #60a5fa;
+    margin: 2px 0;
+  }
+
+  .card-user-name {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.menu-user-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+
+  .menu-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #eff6ff;
+    color: #2563eb;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-    cursor: pointer;
-    transition: background 0.2s;
 
     mat-icon {
       font-size: 22px;
       width: 22px;
       height: 22px;
-      color: $white;
+    }
+  }
+
+  .menu-user-details {
+    display: flex;
+    flex-direction: column;
+
+    .menu-user-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #0f172a;
     }
 
-    &:hover {
-      background: rgba(255,255,255,0.25);
+    .menu-user-role {
+      font-size: 0.75rem;
+      color: #64748b;
     }
+  }
+}
+
+.logout-menu-item {
+  color: #dc2626 !important;
+
+  .logout-icon {
+    color: #dc2626 !important;
   }
 }
 

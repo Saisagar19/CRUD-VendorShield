@@ -1,4 +1,4 @@
-<div class="app-container">
+<div class="app-container" *ngIf="currentUser$ | async as user; else unauthLayout">
   <!-- 1. HEADER -->
   <mat-toolbar class="app-header">
     <div class="header-left">
@@ -9,11 +9,39 @@
       <span class="header-brand">VendorShield</span>
       <span class="header-subtitle">Portal</span>
     </div>
+
     <span class="spacer"></span>
+
     <div class="header-right">
-      <div class="user-avatar" title="Admin User">
-        <mat-icon>account_circle</mat-icon>
-      </div>
+      <!-- Role Badge -->
+      <span class="user-role-badge" [ngClass]="getRoleClass(user.role)">
+        {{ getRoleBadge(user.role) }}
+      </span>
+
+      <!-- User Menu Trigger -->
+      <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-btn">
+        <mat-icon class="user-avatar-icon">account_circle</mat-icon>
+        <span class="user-name">{{ user.username }}</span>
+        <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+      </button>
+
+      <!-- User Dropdown Menu -->
+      <mat-menu #userMenu="matMenu" xPosition="before" class="app-user-menu">
+        <div class="menu-user-header">
+          <div class="menu-user-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="menu-user-details">
+            <span class="menu-user-name">{{ user.username }}</span>
+            <span class="menu-user-role">{{ user.role }}</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()" class="logout-menu-item">
+          <mat-icon class="logout-icon">logout</mat-icon>
+          <span>Sign Out</span>
+        </button>
+      </mat-menu>
     </div>
   </mat-toolbar>
 
@@ -23,20 +51,24 @@
       <div class="sidebar-section-label">MAIN MENU</div>
 
       <mat-nav-list class="sidebar-nav" [disableRipple]="true">
-
         <!-- Vendors (active route) -->
         <a mat-list-item class="nav-item" [disableRipple]="true" routerLink="/vendors" routerLinkActive="nav-item--active" [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon class="nav-icon">store</mat-icon>
           <span class="nav-label">Vendors</span>
         </a>
 
-        <!-- Add Vendor -->
-        <a mat-list-item class="nav-item" [disableRipple]="true" routerLink="/vendors/new" routerLinkActive="nav-item--active">
+        <!-- Add Vendor (Role-protected: Admin & Manager only) -->
+        <a *ngIf="authService.canManageVendors()" mat-list-item class="nav-item" [disableRipple]="true" routerLink="/vendors/new" routerLinkActive="nav-item--active">
           <mat-icon class="nav-icon">person_add</mat-icon>
           <span class="nav-label">Add Vendor</span>
         </a>
-
       </mat-nav-list>
+
+      <div class="sidebar-user-card">
+        <div class="card-role-title">CURRENT ROLE</div>
+        <div class="card-role-val">{{ getRoleBadge(user.role) }}</div>
+        <div class="card-user-name">{{ user.username }}</div>
+      </div>
 
       <div class="sidebar-footer">
         <mat-icon class="sidebar-footer-icon">info_outline</mat-icon>
@@ -57,3 +89,8 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
+
+<!-- Standalone Outlet for Non-Authenticated views (Login) -->
+<ng-template #unauthLayout>
+  <router-outlet></router-outlet>
+</ng-template>

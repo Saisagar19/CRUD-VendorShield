@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { VendorService } from '../../../core/services/vendor.service';
 import { Vendor, VendorRequest, VendorStatus } from '../../../core/models/vendor.model';
 import { VendorDialogComponent } from '../vendor-dialog/vendor-dialog.component';
+import { AuthService } from '../../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-vendor-list',
@@ -34,9 +35,18 @@ export class VendorListComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private vendorService: VendorService,
+    public authService: AuthService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {}
+
+  get canManage(): boolean {
+    return this.authService.canManageVendors();
+  }
+
+  get canDelete(): boolean {
+    return this.authService.canDeleteVendors();
+  }
 
   ngOnInit(): void {
     this.loadVendors();
